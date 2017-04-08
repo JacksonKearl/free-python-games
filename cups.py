@@ -13,7 +13,9 @@ Exercises
 6. How could you allow multiple pairs of cups to rotate at the same time?
 """
 
-import sys, pygame, random
+import sys
+import pygame
+import random
 from pygame.locals import *
 from math import pi, sin, cos
 
@@ -28,15 +30,18 @@ screen = pygame.display.set_mode((width, width))
 
 white, blue, red = (255, 255, 255), (0, 0, 255), (255, 0, 0)
 
+
 def draw_cup(index, color=blue, size=2):
     xpos = int(index * block + block / 2)
     ypos = int(width / 2)
-    pygame.draw.circle(screen, color, (xpos, ypos), cup_width / size)
+    pygame.draw.circle(screen, color, (xpos, ypos), cup_width // size)
+
 
 def draw_cups():
     pygame.draw.rect(screen, white, (0, 0, width, width))
     for index in range(cup_count):
         draw_cup(index)
+
 
 def animate_start():
     for repeat in range(fps):
@@ -46,15 +51,16 @@ def animate_start():
                 draw_cup(idx, red, 4)
         yield
 
+
 def animate_swap(left, right):
     if left > right:
         left, right = right, left
 
     direction = random.choice([1, -1])
-    radius = (right - left) * (block / 2)
+    radius = (right - left) * (block // 2)
     center = (left + right) / 2.0 * block + (block / 2)
 
-    for angle in range(0, 180, 10):
+    for angle in range(0, 181, 10):
         angle *= direction
         pygame.draw.rect(screen, white, (0, 0, width, width))
         for index in range(cup_count):
@@ -62,13 +68,14 @@ def animate_swap(left, right):
                 offset = 0 if index == right else 180
                 radians = (angle + offset) * pi / 180
                 xpos = int(center + radius * cos(radians))
-                ypos = int(width / 2 - radius * sin(radians))
-                pygame.draw.circle(screen, blue, (xpos, ypos), cup_width / 2)
+                ypos = int(width // 2 - radius * sin(radians))
+                pygame.draw.circle(screen, blue, (xpos, ypos), cup_width // 2)
             else:
                 draw_cup(index)
         yield
 
     cups[left], cups[right] = cups[right], cups[left]
+
 
 def reset():
     global cups, cup, animation, swaps
@@ -105,7 +112,7 @@ while True:
         swaps -= 1
     else:
         try:
-            animation.next()
+            next(animation)
         except:
             animation = None
 

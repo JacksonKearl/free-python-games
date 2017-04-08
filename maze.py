@@ -10,13 +10,14 @@ Exercises
 3. Display only the player's immediate surroundings (no history).
 """
 
-import sys, pygame
+import sys
+import pygame
 import random
 from pygame.locals import *
 
 pygame.init()
 
-tiles, block = 24, 20
+tiles, block = 12, 20
 size = width, height = (tiles * block), (tiles * block + 10)
 
 dirs = up, right, down, left = (-tiles, 1, tiles, -1)
@@ -30,6 +31,7 @@ white, grey, black = (255, 255, 255), (100, 100, 100), (0, 0, 0)
 font = pygame.font.Font(None, 14)
 clock = pygame.time.Clock()
 screen = pygame.display.set_mode(size)
+
 
 def make_maze():
     global maze, player, end, moves
@@ -51,14 +53,15 @@ def make_maze():
         frontier[pos], frontier[-1] = frontier[-1], frontier[pos]
         spot = frontier.pop()
 
-        if maze[spot] != wall: continue
+        if maze[spot] != wall:
+            continue
 
-        if map(lambda diff: maze[spot + diff], dirs).count(0) != 1:
+        if list(map(lambda diff: maze[spot + diff], dirs)).count(0) != 1:
             continue
 
         maze[spot] = hall
 
-        frontier.extend(map(lambda diff: spot + diff, dirs))
+        frontier.extend([spot + diff for diff in dirs])
 
     # End goal should be farthest reachable hall.
 
@@ -67,8 +70,7 @@ def make_maze():
         next = []
         for front in frontier:
             maze[front] = extra
-            next.extend(filter(lambda pos: maze[pos] == hall,
-                               map(lambda diff: front + diff, dirs)))
+            next.extend([pos for pos in [front + diff for diff in dirs] if maze[pos] == hall])
         if next:
             frontier = next
         else:
@@ -76,20 +78,24 @@ def make_maze():
             break
 
     for pos, val in enumerate(maze):
-        if val == extra: maze[pos] = hall
+        if val == extra:
+            maze[pos] = hall
 
     moves = 0
     end = last
 
+
 def draw_tile(func, color, pos):
     left = (pos % tiles) * block
-    top = (pos / tiles) * block
+    top = (pos // tiles) * block
     func(screen, color, (left, top, block, block))
+
 
 def draw_maze():
     for pos, val in enumerate(maze):
         color = white if val == hall else black
         draw_tile(pygame.draw.rect, color, pos)
+
 
 def draw_view():
     for diff in view:
@@ -106,6 +112,7 @@ def draw_view():
     screen.blit(surface, (5, tiles * block))
 
     pygame.display.flip()
+
 
 def restart():
     make_maze()
@@ -140,7 +147,8 @@ while True:
         elif event.key == K_q:
             pygame.event.post(pygame.event.Event(QUIT))
 
-    if player == end: continue
+    if player == end:
+        continue
 
     if move_dir is not None:
         if maze[player + move_dir] == hall:

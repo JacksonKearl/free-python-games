@@ -10,7 +10,8 @@ Exercises
 3. Allow the tron players to go around the edge of the screen.
 """
 
-import sys, pygame
+import sys
+import pygame
 from pygame.locals import *
 
 pygame.init()
@@ -22,15 +23,16 @@ up, right, down, left = -tiles, 1, tiles, -1
 clock = pygame.time.Clock()
 screen = pygame.display.set_mode((tiles * width, tiles * width))
 
+
 def restart():
     global board, player1, player2
     board = [black] * (tiles * tiles)
     player1 = dict(direction=left,
-                   position=(tiles * 3 / 4) + (tiles * tiles / 2),
+                   position=(tiles * 3 // 4) + (tiles * tiles // 2),
                    dead=False,
                    color=red)
     player2 = dict(direction=right,
-                   position=(tiles / 4) + (tiles * tiles / 2),
+                   position=(tiles // 4) + (tiles * tiles // 2),
                    dead=False,
                    color=blue)
     screen.fill(black)
@@ -38,11 +40,12 @@ def restart():
 
 restart()
 
+
 def move(player):
     curr = player['position']
 
     curr_x = curr % tiles
-    curr_y = curr / tiles
+    curr_y = curr // tiles
 
     if player['direction'] == left:
         curr_x -= 1
@@ -65,8 +68,9 @@ def move(player):
 
     player['position'] = next
 
+
 def draw_rect(player):
-    left, top = player['position'] % tiles, player['position'] / tiles
+    left, top = player['position'] % tiles, player['position'] // tiles
     return (left * width, top * width, width, width)
 
 while True:

@@ -18,13 +18,13 @@ from random import sample, shuffle
 digits = 3
 guesses = 10
 
-print 'I am thinking of a {}-digit number. Try to guess what it is.'.format(digits)
-print 'Here are some clues:'
-print 'When I say:    That means:'
-print '  Pico         One digit is correct but in the wrong position.'
-print '  Fermi        One digit is correct and in the right position.'
-print '  Bagels       No digit is correct.'
-print 'There are no repeated digits in the number.'
+print('I am thinking of a {}-digit number. Try to guess what it is.'.format(digits))
+print('Here are some clues:')
+print('When I say:    That means:')
+print('  Pico         One digit is correct but in the wrong position.')
+print('  Fermi        One digit is correct and in the right position.')
+print('  Bagels       No digit is correct.')
+print('There are no repeated digits in the number.')
 
 while True:
     # Create a random number.
@@ -36,20 +36,20 @@ while True:
 
     number = ''.join(letters)
 
-    print 'I have thought up a number. You have {} guesses to get it.'.format(guesses)
+    print('I have thought up a number. You have {} guesses to get it.'.format(guesses))
 
     counter = 1
 
     while True:
         prompt = 'Guess #{}: '.format(counter)
-        guess = raw_input(prompt)
+        guess = input(prompt)
 
         if len(guess) != digits:
-            print 'Wrong number of digits. Try again!'
+            print('Wrong number of digits. Try again!')
             continue
 
         if not all(letter in '0123456789' for letter in guess):
-            print 'That is not a number. Try again!'
+            print('That is not a number. Try again!')
             continue
 
         # Create the clues.
@@ -66,21 +66,21 @@ while True:
         shuffle(clues)
 
         if len(clues) == 0:
-            print 'Bagels'
+            print('Bagels')
         else:
-            print ' '.join(clues)
+            print(' '.join(clues))
 
         counter += 1
 
         if guess == number:
-            print 'You got it!'
+            print('You got it!')
             break
 
         if counter > guesses:
-            print 'You ran out of guesses. The answer was {}.'.format(number)
+            print('You ran out of guesses. The answer was {}.'.format(number))
             break
 
-    print 'Do you want to play again? (yes or no)'
-    answer = raw_input()
+    print('Do you want to play again? (yes or no)')
+    answer = input()
     if not answer.lower().startswith('y'):
         break

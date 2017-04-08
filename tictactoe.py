@@ -11,7 +11,9 @@ Exercises
 4. Make the computer player dumber.
 """
 
-import sys, pygame, random
+import sys
+import pygame
+import random
 from pygame.locals import *
 
 pygame.init()
@@ -23,6 +25,7 @@ clock = pygame.time.Clock()
 black, red, blue, white = (0, 0, 0), (255, 0, 0), (0, 0, 255), (255, 255, 255)
 lose, tie, win = xxx, empty, ooo = -1, 0, 1
 human = ooo
+
 
 def draw_game():
     pygame.draw.rect(screen, white, (0, 0, width, height))
@@ -53,6 +56,7 @@ def draw_game():
 
     pygame.display.flip()
 
+
 def is_won():
     for val in range(3):
         # Check matching row.
@@ -75,6 +79,7 @@ def is_won():
 
     return empty
 
+
 def calc_move(player):
     if all(val == empty for line in board for val in line):
         row = random.randrange(3)
@@ -83,6 +88,7 @@ def calc_move(player):
     else:
         result = best_move(player)
     return result
+
 
 def best_move(player):
     """
@@ -113,9 +119,11 @@ def best_move(player):
 
                 board[row][col] = empty
 
-    if best is None: best = (tie, None)
+    if best is None:
+        best = (tie, None)
 
     return best
+
 
 def restart():
     global board, turn, human
@@ -143,12 +151,13 @@ while True:
         elif event.key == K_q:
             pygame.event.post(pygame.event.Event(QUIT))
     elif event.type == MOUSEBUTTONDOWN and event.button == 1:
-        pos = (event.pos[1] / 160, event.pos[0] / 160)
+        pos = (event.pos[1] // 160, event.pos[0] // 160)
 
     if human != turn:
         pos = calc_move(turn)[1]
 
-    if pos is None or is_won(): continue
+    if pos is None or is_won():
+        continue
 
     row, col = pos
 

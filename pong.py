@@ -6,9 +6,12 @@ http://www.grantjenks.com/
 
 Exercises
 1. Change how the ball bounces.
+2. Allow paddles to wrap
 """
 
-import sys, pygame, random
+import sys
+import pygame
+import random
 from pygame.locals import *
 
 pygame.init()
@@ -21,11 +24,13 @@ screen = pygame.display.set_mode((width, height))
 
 white, black = (255, 255, 255), (0, 0, 0)
 
+
 def draw():
     pygame.draw.rect(screen, black, (0, 0, width, height))
-    pygame.draw.circle(screen, white, map(int, ball), 2)
+    pygame.draw.circle(screen, white, list(map(int, ball)), 2)
     pygame.draw.rect(screen, white, paddle[lhs])
     pygame.draw.rect(screen, white, paddle[rhs])
+
 
 def update():
     global dead
@@ -42,12 +47,13 @@ def update():
         motion[y] += random.random() - 0.5
 
     ball_rect = Rect(ball[x] - 2, ball[y] - 2, 4, 4)
-    paddles = map(Rect, paddle)
+    paddles = list(map(Rect, paddle))
 
     if (ball_rect.colliderect(paddles[lhs])
-        or ball_rect.colliderect(paddles[rhs])):
+            or ball_rect.colliderect(paddles[rhs])):
         motion[x] *= -1
         motion[x] += random.random() - 0.5
+
 
 def reset():
     global ball, motion, paddle, dead

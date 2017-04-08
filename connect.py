@@ -11,7 +11,8 @@ Exercises
 4. Add logic to detect a winner.
 """
 
-import sys, pygame
+import sys
+import pygame
 from pygame.locals import *
 
 pygame.init()
@@ -24,6 +25,7 @@ screen = pygame.display.set_mode(size)
 
 white, black = (245, 245, 220), (0, 0, 128)
 blue, red, yellow = (65, 105, 225), (255, 99, 71), (255, 215, 0)
+
 
 def draw_game():
     """Draw the connect four board."""
@@ -44,6 +46,7 @@ def draw_game():
         pygame.draw.line(screen, black, (offset, 0), (offset, 480), 3)
 
     pygame.display.flip()
+
 
 def restart():
     global board, turn
@@ -67,14 +70,16 @@ while True:
         elif event.key == K_q:
             pygame.event.post(pygame.event.Event(QUIT))
     elif event.type == MOUSEBUTTONDOWN and event.button == 1:
-        col = event.pos[0] / 80
+        col = event.pos[0] // 80
 
-    if col is None: continue
+    if col is None:
+        continue
 
     # Search for an open row in this column.
 
-    for val in reversed(range(6)):
-        if board[val][col] == white: break
+    for val in reversed(list(range(6))):
+        if board[val][col] == white:
+            break
     else:
         continue
 

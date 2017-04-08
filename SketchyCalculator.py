@@ -9,29 +9,29 @@ Model no: 1308
 No License. (figures huh? Given our sketchy name.)
 """
 import math
-print 'Copyright(c)2014 China Instruments'
-print 'Ti-Sketchy 1308'
-print '__________________________'
-print 'password required'
+print('Copyright(c)2014 China Instruments')
+print('Ti-Sketchy 1308')
+print('__________________________')
+print('password required')
 
-name = raw_input('Enter password:')
-print ''
-print ' "Eh...Close Enough" '
-print '--------------------------'
+name = input('Enter password:')
+print('')
+print(' "Eh...Close Enough" ')
+print('--------------------------')
 while True:
-    num1 = input("Enter first number: ")
-    operation = raw_input("Enter operation(+,-,x,/,sqrt): ")
+    num1 = eval(input("Enter first number: "))
+    operation = input("Enter operation(+,-,x,/,sqrt): ")
     if operation == "sqrt" or operation == "Sqrt":
-        print math.sqrt(num1)
+        print(math.sqrt(num1))
     else:
-        num2 = input("Enter second number: ")
+        num2 = eval(input("Enter second number: "))
         if operation == "+":
-            print "Answer:", num1+num2
+            print("Answer:", num1+num2)
         elif operation == "-":
-            print "Answer:", num1-num2
+            print("Answer:", num1-num2)
         elif operation == "*" or operation == "x" or operation == "X":
-            print "Answer:", num1*num2
+            print("Answer:", num1*num2)
         elif operation == "/":
-            print "Answer:", num1/num2
+            print("Answer:", num1/num2)
         else:
-            print "Syntax error"
+            print("Syntax error")

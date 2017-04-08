@@ -1,4 +1,6 @@
 """
+Note: Not sure of this works. -jkearl
+
 Simon Says
 
 Copyright (c) 2014 Grant Jenks
@@ -8,7 +10,8 @@ Exercises
 1. Add more rectangles.
 """
 
-import sys, pygame
+import sys
+import pygame
 from pygame.locals import *
 from pygame import Rect
 from random import randrange
@@ -20,33 +23,37 @@ font = pygame.font.Font(None, 16)
 clock = pygame.time.Clock()
 
 black, white = (0, 0, 0), (255, 255, 255)
-rects = ((Rect(  5,   5, 230, 230), (200, 200,   0), (255, 255,   0)),
+rects = ((Rect(5,   5, 230, 230), (200, 200,   0), (255, 255,   0)),
          (Rect(245,   5, 230, 230), (200,   0,   0), (255,   0,   0)),
-         (Rect(  5, 245, 230, 230), (  0, 200,   0), (  0, 255,   0)),
-         (Rect(245, 245, 230, 230), (  0,   0, 200), (  0,   0, 255)))
+         (Rect(5, 245, 230, 230), (0, 200,   0), (0, 255,   0)),
+         (Rect(245, 245, 230, 230), (0,   0, 200), (0,   0, 255)))
+
 
 def reset():
     global guess, pattern
     guess, pattern = [], [randrange(len(rects))]
     draw_pattern()
 
+
 def draw_pattern():
     for value in pattern:
         rect = rects[value]
 
-        clock.tick(12)
+        clock.tick(120)
         draw_screen()
         pygame.display.flip()
 
-        clock.tick(12)
+        clock.tick(120)
         draw_screen()
         pygame.draw.rect(screen, rect[2], rect[0])
         pygame.display.flip()
+
 
 def draw_screen():
     pygame.draw.rect(screen, black, (0, 0, 480, 480))
     for rect in rects:
         pygame.draw.rect(screen, rect[1], rect[0])
+
 
 def draw_message(message):
     surface = font.render(message, True, black)

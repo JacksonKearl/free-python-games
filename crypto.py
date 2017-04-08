@@ -58,43 +58,43 @@ def decode(message):
     pass
 
 def get_message():
-    print 'Enter a message:'
-    message = raw_input()
+    print('Enter a message:')
+    message = input()
     return message
 
 def get_key():
-    print 'Enter a key (1 - 25):'
+    print('Enter a key (1 - 25):')
     try:
-        key = int(raw_input())
+        key = int(input())
         return key
     except:
-        print 'Invalid key. Using key: 0.'
+        print('Invalid key. Using key: 0.')
         return 0
 
 if __name__ == '__main__':
-    print 'Do you wish to encrypt or decrypt or decode a message?'
-    choice = raw_input()
+    print('Do you wish to encrypt or decrypt or decode a message?')
+    choice = input()
 
     if choice == 'encrypt':
 
         message = get_message()
         key = get_key()
-        print 'Encrypted message:'
-        print encrypt(message, key)
+        print('Encrypted message:')
+        print(encrypt(message, key))
 
     elif choice == 'decrypt':
 
         message = get_message()
         key = get_key()
-        print 'Decrypted message:'
-        print decrypt(message, key)
+        print('Decrypted message:')
+        print(decrypt(message, key))
 
     elif choice == 'decode':
 
         message = get_message()
-        print 'Decoding message:'
+        print('Decoding message:')
         decode(message)
 
     else:
 
-        print 'Error: Unrecognized Command'
+        print('Error: Unrecognized Command')

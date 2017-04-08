@@ -10,7 +10,10 @@ Exercises:
 3. Increase the number of tiles to an 8x8 grid.
 """
 
-import sys, pygame, random, time
+import sys
+import pygame
+import random
+import time
 from pygame.locals import *
 
 pygame.init()
@@ -36,6 +39,7 @@ for y_pos in range(0, height, tile_size):
         tile.blit(image, (0, 0), area)
         tiles.append((area, tile))
 
+
 def draw_game():
     """Draw the game state."""
 
@@ -45,11 +49,11 @@ def draw_game():
 
     # Draw lines to create grid for tiles.
 
-    for pos in range(1, width / tile_size):
+    for pos in range(1, width // tile_size):
         offset = pos * tile_size
         pygame.draw.line(screen, white, (offset, 0), (offset, height))
 
-    for pos in range(1, height / tile_size):
+    for pos in range(1, height // tile_size):
         offset = pos * tile_size
         pygame.draw.line(screen, white, (0, offset), (width, offset))
 
@@ -64,10 +68,13 @@ def draw_game():
         surface = font.render(str(values[value]), True, white)
         screen.blit(surface, tiles[value][0].move(45, 45))
 
-    if select is not None: draw_number(select)
-    if match is not None: draw_number(match)
+    if select is not None:
+        draw_number(select)
+    if match is not None:
+        draw_number(match)
 
     pygame.display.flip()
+
 
 def restart():
     """Reset the game with random values."""
@@ -75,7 +82,7 @@ def restart():
     select, match, pause = None, None, 0
     count = len(tiles)
     assert count % 2 == 0
-    values = list(range(count / 2)) * 2
+    values = list(range(count // 2)) * 2
     random.shuffle(values)
     guesses = [False] * count
     draw_game()
@@ -109,11 +116,12 @@ while True:
             select, match, pause = None, None, 0
             draw_game()
 
-    if pos is None: continue
+    if pos is None:
+        continue
 
-    xxx = pos[0] / tile_size
-    yyy = pos[1] / tile_size
-    index = yyy * (width / tile_size) + xxx
+    xxx = pos[0] // tile_size
+    yyy = pos[1] // tile_size
+    index = yyy * (width // tile_size) + xxx
 
     if guesses[index]:
         continue

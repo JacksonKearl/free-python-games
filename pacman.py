@@ -25,8 +25,10 @@ ghost_img = pygame.image.load('ghost.jpg')
 clock = pygame.time.Clock()
 screen = pygame.display.set_mode((340, 400))
 
+
 class Game:
     """Track pacman game state."""
+
     def __init__(self):
         """Initialize game."""
         self.tiles_width = 17
@@ -67,15 +69,19 @@ class Game:
 
     def next_pos(self, next_dir, rect):
         """Advance rectangle by given direction."""
-        if next_dir == 0: chng = (4, 0)
-        if next_dir == 1: chng = (0, -4)
-        if next_dir == 2: chng = (-4, 0)
-        if next_dir == 3: chng = (0, 4)
+        if next_dir == 0:
+            chng = (4, 0)
+        if next_dir == 1:
+            chng = (0, -4)
+        if next_dir == 2:
+            chng = (-4, 0)
+        if next_dir == 3:
+            chng = (0, 4)
         return rect.move(*chng)
 
     def rect_idx(self, rect):
         """Calculate tile index by rectangle."""
-        return (rect.top / 20) * self.tiles_width + (rect.left / 20)
+        return (rect.top // 20) * self.tiles_width + (rect.left // 20)
 
     def valid_pos(self, rect):
         """Return True iff character rectangle is valid on tiles."""
@@ -150,7 +156,7 @@ class Game:
 
         for idx, val in enumerate(self.levels[self.level]):
             left = (idx % self.tiles_width) * 20
-            top = (idx / self.tiles_width) * 20
+            top = (idx // self.tiles_width) * 20
             if val == 0:
                 # Draws a blue square.
                 color = (0, 0, 128)
@@ -178,7 +184,7 @@ class Game:
 
         pygame.draw.rect(screen, (0, 0, 0), (0, 380, 100, 20))
         msg = 'Score: ' + str(self.score)
-        text = font.render(msg , True, (255, 255, 255))
+        text = font.render(msg, True, (255, 255, 255))
         screen.blit(text, (5, 382))
 
 game = Game()
